@@ -93,3 +93,5 @@ const createPost = () => ({
 });
 
 const similarPosts = () => new Array(SIMILAR_POST_COUNT).fill(null).map(() => createPost());
+
+const testData = similarPosts();
