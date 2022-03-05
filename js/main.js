@@ -94,4 +94,5 @@ const createPost = () => ({
 
 const similarPosts = () => new Array(SIMILAR_POST_COUNT).fill(null).map(() => createPost());
 
+// eslint-disable-next-line no-unused-vars
 const testData = similarPosts();
