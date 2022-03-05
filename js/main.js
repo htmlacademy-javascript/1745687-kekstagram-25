@@ -6,7 +6,7 @@ function getIntRandomNumber(min, max) {
     [absMax, absMin] = [absMin, absMax];
   }
 
-  return Math.floor(Math.random() * (absMin - absMax -  1) + absMax + 1);
+  return Math.floor(Math.random() * (absMax - absMin +  1)) + absMin;
 }
 
 function checkStringLength(string, maxLength) {
