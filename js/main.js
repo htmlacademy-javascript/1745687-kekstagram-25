@@ -92,5 +92,3 @@ const createPost = () => ({
 
 const createSmilarPosts = () => Array.from({length: SIMILAR_POST_COUNT}, createPost);
 
-// eslint-disable-next-line no-unused-vars
-const testData = createSmilarPosts();
