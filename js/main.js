@@ -3,9 +3,9 @@ const SIMILAR_COMMENT_COUNT = 200;
 const SIMILAR_PHOTO_COUNT = 25;
 const SIMILAR_LIKES_COUNT = [15, 200];
 const [likesMin, likesMax] = SIMILAR_LIKES_COUNT;
-const ID_POST_ARRAY = Array.from({ length: SIMILAR_POST_COUNT }, (undef, index) => index + 1);
-const ID_COMMENT_ARRAY = Array.from({ length: SIMILAR_COMMENT_COUNT }, (undef, index) => index + 1);
-const PHOTO_ARRAY = Array.from({ length: SIMILAR_PHOTO_COUNT }, (undef, index) => index + 1);
+const ID_POST_ARRAY = Array.from({ length: SIMILAR_POST_COUNT }, (_item, index) => index + 1);
+const ID_COMMENT_ARRAY = Array.from({ length: SIMILAR_COMMENT_COUNT }, (_item, index) => index + 1);
+const PHOTO_ARRAY = Array.from({ length: SIMILAR_PHOTO_COUNT }, (_item, index) => index + 1);
 const MAX_PHOTO_COMMENTS = 4;
 
 const getPostID = getRandomUniqElement(ID_POST_ARRAY);
@@ -39,19 +39,17 @@ function getRandomIndex(arr) {
   return Math.floor(Math.random() * arr.length);
 }
 
-function reinitArray(arr) {
-  return arr.slice();
-}
-
 function getRandomUniqElement(Array) {
-  let arr = reinitArray(Array);
-  return function getRandomElement() {
-    if (arr.length === 0) {arr = reinitArray(Array);}
+  let arr = Array.slice();
+  return () => {
+    if (arr.length === 0) {
+      arr = Array.slice();
+    }
     return arr.splice(getRandomIndex(arr), 1)[0];
   };
 }
 
-const SIMILAR_DESCRIPTION = [
+const SIMILAR_DESCRIPTIONS = [
   'Замечательное фото',
   'Удачный снимок',
   'Хочу больше фотографий!',
@@ -59,7 +57,7 @@ const SIMILAR_DESCRIPTION = [
   'Удачный кадр',
 ];
 
-const SIMILAR_MESSAGE = [
+const SIMILAR_MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -80,19 +78,19 @@ const SIMILAR_NAMES = [
 const createComment = () => ({
   id: getCommentID(),
   avatar: `img/avatar-${  getIntRandomNumber(1, 6)  }.svg`,
-  message: getRandomArrayElement(SIMILAR_MESSAGE),
+  message: getRandomArrayElement(SIMILAR_MESSAGES),
   name: getRandomArrayElement(SIMILAR_NAMES),
 });
 
 const createPost = () => ({
   id: getPostID(),
   url: `photos/${  getPhoto()  }.jpg`,
-  description: getRandomArrayElement(SIMILAR_DESCRIPTION),
+  description: getRandomArrayElement(SIMILAR_DESCRIPTIONS),
   likes: getIntRandomNumber(likesMin, likesMax),
-  comments: new Array(getIntRandomNumber(1, MAX_PHOTO_COMMENTS)).fill(null).map(createComment),
+  comments: Array.from({length: getIntRandomNumber(1, MAX_PHOTO_COMMENTS)}, createComment)
 });
 
-const similarPosts = () => new Array(SIMILAR_POST_COUNT).fill(null).map(() => createPost());
+const createSmilarPosts = () => Array.from({length: SIMILAR_POST_COUNT}, createPost);
 
 // eslint-disable-next-line no-unused-vars
-const testData = similarPosts();
+const testData = createSmilarPosts();
